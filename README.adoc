@@ -75,7 +75,12 @@ Par exemple :
 .Erreur de compilation
 image::error1.png["Erreur de compilation", width=80%]
 +
-. Corrigez le code en conséquence.
+. Ici, il y a une erreur: Le type donnés retournés de la méthode afficherCancan() est manqué. On peut modifier comme ci dessus:
+[source,java]
+----
+public void afficherCancan()
+----
+
 +
 .Erreur corrigée
 image::success1.png["Erreur éliminée", width=80%]
@@ -117,14 +122,39 @@ java -jar target/tp_qualite-1.0.jar
 .Et voilà!
 image::success2.png["Ca run!", width=80%]
 
-== Améliorations
+== Pour produire un javadoc sur Maven:
+1. Ajouter le plugin javadoc dans le fichier pom.xml:
 
-. Reprenez un de vos exercices précédents et mettez les sources dans `src/java`.
-. Ajustez éventuellement le `pom.xml` pour que les étapes précédentes produisent les résultats escomptés. Pensez à vérifier que votre fichier .jar est exécutable. Que devez-vous corriger dans votre pom.xml ? Quelle est la commande pour le lancer ?
-. Ajoutez les commentaires vus en dev.
-. Cherchez dans la documentation {maven} les commandes permettant de générer une documentation javadoc, et les adaptions à faire sur votre projet (et éventuellement `pom.xml`) afin que {maven} génère la documentation automatiquement pour vous.
-. Documentez votre projet: remplacez le contenu de ce fichier README.doc par les instructions de compilation, de documentation et de lancement de votre projet. 
+----
+<project>
+  ...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.4.1</version>
+        <configuration>
+          ...
+        </configuration>
+      </plugin>
+    </plugins>
+    ...
+  </build>
+  ...
+</project>
+----
 
+2. Il faut que la classe de programme compilé soit public pour générer un javadoc, donc on modifie:
+[source,java]
+----
+public class HelloJava
+----
+
+3. Enfin, on utilise la commande:
+----
+mvn javadoc:javadoc
+----
 == Consignes et rendus
 
 Pour ce TP, il vous faudra simplement rendre le projet complet (`src`) ainsi que la dernière version du fichier `pom.xml` sur votre dépôt et la javadoc de votre code.
